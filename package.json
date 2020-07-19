@@ -1,0 +1,66 @@
+{
+  "name": "nestjs-db-unit",
+  "version": "1.0.0",
+  "description": "Useful utils to simplify integration tests for nestjs / typeorm / postgres projects",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "clean": "rm -rf dist",
+    "format": "prettier --write \"lib/**/*.ts\"",
+    "publish:npm": "npm publish --access public",
+    "test": "jest --config ./test/jest-it.json",
+    "test:watch": "jest --watch --config ./test/jest-it.json",
+    "test:cov": "jest --coverage --config ./test/jest-it.json",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand --config ./test/jest-it.json",
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test:run": "cd test; nest start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikhail-angelov/nestjs-db-unit.git"
+  },
+  "keywords": [
+    "test",
+    "integration",
+    "typeorm",
+    "nestjs",
+    "postgres"
+  ],
+  "author": "Mikhail Angelov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mikhail-angelov/nestjs-db-unit/issues"
+  },
+  "homepage": "https://github.com/mikhail-angelov/nestjs-db-unit#readme",
+  "peerDependencies": {
+    "@nestjs/common": "^6.11.8",
+    "@nestjs/core": "^6.11.8",
+    "@nestjs/typeorm": "^7.1.0",
+    "typeorm": "^0.2.25"
+  },
+  "devDependencies": {
+    "@nestjs/common": "^7.3.2",
+    "@nestjs/core": "^7.3.2",
+    "@nestjs/platform-express": "^7.3.2",
+    "@nestjs/testing": "^7.3.2",
+    "@nestjs/typeorm": "^7.1.0",
+    "@types/express": "^4.17.7",
+    "@types/jest": "^26.0.4",
+    "@types/node": "^14.0.23",
+    "@types/supertest": "^2.0.10",
+    "jest": "^26.1.0",
+    "pg": "^8.3.0",
+    "prettier": "^2.0.5",
+    "rxjs": "^6.6.0",
+    "supertest": "^4.0.2",
+    "ts-jest": "^26.1.2",
+    "ts-loader": "^8.0.1",
+    "tsconfig-paths": "^3.9.0",
+    "typeorm": "^0.2.25",
+    "typescript": "^3.9.7"
+  },
+  "dependencies": {
+    "sqlite3": "^5.0.0"
+  }
+}
