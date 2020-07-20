@@ -1,5 +1,8 @@
 # nestjs-db-unit
 
+![Test](https://github.com/mikhail-angelov/nestjs-db-unit/workflows/Test/badge.svg)
+[![Coverage Status](https://coveralls.io/repos/github/mikhail-angelov/nestjs-db-unit/badge.svg?branch=master)](https://coveralls.io/github/mikhail-angelov/nestjs-db-unit?branch=master)
+
 This util is designed to simplify integration tests for `nestjs`/`typeorm`/`postgres` projects
 it replace postgres DB connection with sqlite in memory DB for test environment
 
