@@ -11,6 +11,9 @@ interface Options {
   debug?: boolean;
 }
 
+type PropertyEntity<T> = {[P in keyof T]: T[P] }
+type PropertyData<T> = { [P in keyof T]: Partial<PropertyEntity<T[P]>>[] }
+
 export class DbUnit {
   private log = false;
   constructor(options?: Options) {
@@ -30,7 +33,7 @@ export class DbUnit {
     return conn?.close();
   }
 
-  async load(data: any) {
+  async load<T>(data: PropertyData<T>) {
     const conn = await getConnection();
     for (let table of Object.keys(data)) {
       const rep = conn.getRepository(table);
