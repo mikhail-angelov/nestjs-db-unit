@@ -11,8 +11,8 @@ interface Options {
   debug?: boolean;
 }
 
-type PropertyEntity<T> = {[P in keyof T]: T[P] }
-type PropertyData<T> = { [P in keyof T]: Partial<PropertyEntity<T[P]>>[] }
+type EntityType<T> = { [P in keyof T]: T[P] };
+type EntitiesCollection<T> = { [P in keyof T]: Partial<EntityType<T[P]>>[] };
 
 export class DbUnit {
   private log = false;
@@ -33,12 +33,16 @@ export class DbUnit {
     return conn?.close();
   }
 
-  async load<T>(data: PropertyData<T>) {
+  async load(data: any) {
     const conn = await getConnection();
     for (let table of Object.keys(data)) {
       const rep = conn.getRepository(table);
       await rep.insert(data[table]);
       this.log && console.log('DB loaded: ', table, data[table].length);
     }
+  }
+
+  safeLoad<T>(data: EntitiesCollection<T>) {
+    return this.load(data);
   }
 }
