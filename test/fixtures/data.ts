@@ -1,8 +1,10 @@
+import {RoleCode} from '../src/entities/roles'
 const data = {
   Role: [
     {
       id: 'test-role',
       name: 'test-role',
+      code: RoleCode.user,
     },
   ],
   User: [

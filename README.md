@@ -118,7 +118,7 @@ npm i nestjs-db-unit
 import {CreateDateColumnEx, UpdateDateColumnEx, ColumnEx} from 'nestjs-db-unit'
 ```
 they wrap `CreateDateColumn`, `UpdateDateColumn`, `Column` respectively
-you should use `ColumnEx` instead of `Column` if it has types: `timestamptz`, `timestamp`, `json`
+you should use `ColumnEx` instead of `Column` if it has types: `timestamptz`, `timestamp`, `json`, `enum`
 > the list could be extended in future
 
 ### DbUnit - utility class

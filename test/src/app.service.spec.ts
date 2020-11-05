@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { DbUnit } from '../../dist';
 import { getRepository, Repository } from 'typeorm';
 import { User } from './entities/users';
-import { Role } from './entities/roles';
+import { Role, RoleCode } from './entities/roles';
 import data from '../fixtures/data';
 
 describe('AppService', () => {
@@ -46,7 +46,7 @@ describe('AppService', () => {
 
   it('should create user"', async () => {
     const user = await service.createUser({
-      role: { name: 'test' },
+      role: { name: 'test', code: RoleCode.admin },
       user: { email: 'test' },
     });
     expect(user.email).toEqual('test');

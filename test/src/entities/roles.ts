@@ -1,6 +1,11 @@
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { User } from './users';
-import { CreateDateColumnEx, UpdateDateColumnEx } from '../../../dist';
+import { CreateDateColumnEx, UpdateDateColumnEx, ColumnEx } from '../../../dist';
+
+export enum RoleCode {
+  user = 'user',
+  admin = 'admin',
+}
 
 @Entity({ name: 'roles' })
 export class Role {
@@ -9,6 +14,9 @@ export class Role {
 
   @Column({ name: 'name', nullable: false })
   name: string;
+
+  @ColumnEx({ type: 'enum', enum: RoleCode, unique: true })
+  code: string;
 
   @OneToMany(() => User, (user) => user.roleId, {
     cascade: true,

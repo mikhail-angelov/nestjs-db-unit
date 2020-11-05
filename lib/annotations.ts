@@ -4,6 +4,7 @@ const postgresSqliteTypeMapping: { [key: string]: ColumnType } = {
   timestamptz: 'datetime',
   timestamp: 'datetime',
   json: 'simple-json',
+  enum: 'text',
 };
 
 function setAppropriateColumnType(mySqlType: ColumnType): ColumnType {
