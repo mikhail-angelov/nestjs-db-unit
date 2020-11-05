@@ -11,6 +11,9 @@ interface Options {
   debug?: boolean;
 }
 
+type EntityType<T> = { [P in keyof T]: T[P] };
+type EntitiesCollection<T> = { [P in keyof T]: Partial<EntityType<T[P]>>[] };
+
 export class DbUnit {
   private log = false;
   constructor(options?: Options) {
@@ -37,5 +40,9 @@ export class DbUnit {
       await rep.insert(data[table]);
       this.log && console.log('DB loaded: ', table, data[table].length);
     }
+  }
+
+  safeLoad<T>(data: EntitiesCollection<T>) {
+    return this.load(data);
   }
 }
