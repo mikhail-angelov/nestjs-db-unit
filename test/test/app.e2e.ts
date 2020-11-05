@@ -5,7 +5,7 @@ import { Repository, getRepository } from 'typeorm';
 import { AppModule } from '../src/app.module';
 import { DbUnit } from '../../dist';
 import { User } from '../src/entities/users';
-import { Role } from '../src/entities/roles';
+import { Role, RoleCode } from '../src/entities/roles';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -36,6 +36,7 @@ describe('AppController (e2e)', () => {
         {
           id: 'any',
           name: 'test',
+          code: RoleCode.user
         },
       ],
       User: [
