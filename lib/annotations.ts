@@ -1,4 +1,4 @@
-import { Column, ColumnOptions, ColumnType, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Column, ColumnOptions, ColumnType, CreateDateColumn, UpdateDateColumn, Generated } from 'typeorm';
 
 const postgresSqliteTypeMapping: { [key: string]: ColumnType } = {
   timestamptz: 'datetime',
@@ -7,9 +7,10 @@ const postgresSqliteTypeMapping: { [key: string]: ColumnType } = {
   enum: 'text',
 };
 
+const isTestEnv = () => process.env.NODE_ENV === 'test';
+
 function setAppropriateColumnType(mySqlType: ColumnType): ColumnType {
-  const isTestEnv = process.env.NODE_ENV === 'test';
-  if (isTestEnv && mySqlType in postgresSqliteTypeMapping) {
+  if (isTestEnv() && mySqlType in postgresSqliteTypeMapping) {
     return postgresSqliteTypeMapping[mySqlType.toString()];
   }
   return mySqlType;
@@ -33,4 +34,11 @@ export function UpdateDateColumnEx(columnOptions: ColumnOptions) {
     columnOptions.type = setAppropriateColumnType(columnOptions.type);
   }
   return UpdateDateColumn(columnOptions);
+}
+
+export function GeneratedEx(strategy) {
+  if (isTestEnv()) {
+    return Generated('uuid');
+  }
+  return Generated(strategy);
 }

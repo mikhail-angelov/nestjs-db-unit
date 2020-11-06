@@ -1,6 +1,6 @@
 import { Column, Entity, Index, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { Role } from './roles';
-import { CreateDateColumnEx, UpdateDateColumnEx, ColumnEx } from '../../../dist';
+import { CreateDateColumnEx, UpdateDateColumnEx, ColumnEx, GeneratedEx } from '../../../dist';
 
 @Entity({ name: 'users' })
 export class User {
@@ -10,6 +10,10 @@ export class User {
   @Index('email')
   @Column({ unique: true })
   email!: string;
+
+  @GeneratedEx('increment')
+  @Column()
+  count!: number;
 
   @Column({ nullable: false, name: 'role_id' })
   roleId!: string;
