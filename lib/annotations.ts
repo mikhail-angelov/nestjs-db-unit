@@ -1,4 +1,4 @@
-import { Column, ColumnOptions, ColumnType, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Column, ColumnOptions, ColumnType, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
 
 const postgresSqliteTypeMapping: { [key: string]: ColumnType } = {
   timestamptz: 'datetime',
@@ -32,4 +32,10 @@ export function UpdateDateColumnEx(columnOptions: ColumnOptions) {
     columnOptions.type = setAppropriateColumnType(columnOptions.type);
   }
   return UpdateDateColumn(columnOptions);
+}
+export function DeleteDateColumnEx(columnOptions: ColumnOptions) {
+  if (columnOptions.type) {
+    columnOptions.type = setAppropriateColumnType(columnOptions.type);
+  }
+  return DeleteDateColumn(columnOptions);
 }
