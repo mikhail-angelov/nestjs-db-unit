@@ -5,6 +5,7 @@ export const sqliteOptions = {
   database: ':memory:',
   dropSchema: true,
   synchronize: true,
+  keepConnectionAlive: true,
 };
 
 interface Options {
@@ -16,8 +17,12 @@ type EntitiesCollection<T> = { [P in keyof T]: Partial<EntityType<T[P]>>[] };
 
 export class DbUnit {
   private log = false;
+  private conn = null;
   constructor(options?: Options) {
     this.log = !!options?.debug;
+    if (this.log) {
+      console.log('new DbUnit');
+    }
   }
   async initDb(config: Partial<ConnectionOptions>) {
     const opts = {
@@ -25,14 +30,18 @@ export class DbUnit {
       ...(this.log ? { logging: true } : {}),
       ...sqliteOptions,
     } as ConnectionOptions;
-    const conn = await createConnection(opts);
-    return conn;
+    if (!this.conn) {
+      this.conn = await createConnection(opts);
+    }
+    return this.conn;
   }
   async closeDb() {
-    const conn = await getConnection();
-    return conn?.close();
+    return this.conn?.synchronize(true);
   }
-
+  async exitDb() {
+    await this.conn?.close();
+    this.conn = null;
+  }
   async load(data: any) {
     const conn = await getConnection();
     for (let table of Object.keys(data)) {

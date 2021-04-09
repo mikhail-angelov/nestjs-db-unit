@@ -95,6 +95,7 @@ describe('AppController', () => {
     service = app.get<AppService>(AppService);
   });
   afterEach(() => db.closeDb());
+  afterAll(()=>db.exitDb()) //optional
 
   it('should get user"', async () => {
     const ID = 'test'
@@ -139,7 +140,11 @@ import {DbUnit} from 'nestjs-db-unit'
 
 - DbUnit::closeDb()
 
-  close DB connection (clean sqlite in-memory DB)
+  initialize DB connection (clean sqlite in-memory DB)
+
+- DbUnit::exitDb()
+
+  close DB connection (close sqlite in-memory DB)
 
 - DbUnit::load(data)
 

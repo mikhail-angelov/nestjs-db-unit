@@ -1,4 +1,12 @@
-import { Column, ColumnOptions, ColumnType, CreateDateColumn, UpdateDateColumn, Generated, DeleteDateColumn } from 'typeorm';
+import {
+  Column,
+  ColumnOptions,
+  ColumnType,
+  CreateDateColumn,
+  UpdateDateColumn,
+  Generated,
+  DeleteDateColumn,
+} from 'typeorm';
 
 const postgresSqliteTypeMapping: { [key: string]: ColumnType } = {
   timestamptz: 'datetime',
@@ -10,7 +18,7 @@ const postgresSqliteTypeMapping: { [key: string]: ColumnType } = {
 const isTestEnv = () => process.env.NODE_ENV === 'test';
 
 function setAppropriateColumnType(mySqlType: ColumnType): ColumnType {
-  if (isTestEnv() && mySqlType in postgresSqliteTypeMapping) {
+  if (isTestEnv() && Object.keys(postgresSqliteTypeMapping).includes(mySqlType.toString())) {
     return postgresSqliteTypeMapping[mySqlType.toString()];
   }
   return mySqlType;

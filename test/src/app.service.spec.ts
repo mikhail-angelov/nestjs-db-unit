@@ -36,6 +36,7 @@ describe('AppService', () => {
     service = app.get<AppService>(AppService);
   });
   afterEach(() => db.closeDb());
+  afterAll(()=>db.exitDb()) //optional
 
   it('should get user"', async () => {
     const ID = data.User[0].id;
