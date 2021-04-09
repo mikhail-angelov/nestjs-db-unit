@@ -14,9 +14,9 @@
     "publish:npm": "npm publish --access public",
     "prepare": "npm run clean && npm run build",
     "prepublishOnly": "npm test && npm run format",
-    "test": "jest --config ./test/jest-it.json",
-    "test:watch": "jest --watch --config ./test/jest-it.json",
-    "test:cov": "jest --coverage --config ./test/jest-it.json",
+    "test": "jest --config ./test/jest-it.js",
+    "test:watch": "jest --watch --config ./test/jest-it.js",
+    "test:cov": "jest --coverage --config ./test/jest-it.js",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand --config ./test/jest-it.json",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "test:run": "cd test; nest start"
