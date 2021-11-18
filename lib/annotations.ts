@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
   Generated,
   DeleteDateColumn,
+  ManyToMany,
 } from 'typeorm';
 
 const postgresSqliteTypeMapping: { [key: string]: ColumnType } = {
@@ -56,4 +57,12 @@ export function DeleteDateColumnEx(columnOptions: ColumnOptions) {
     columnOptions.type = setAppropriateColumnType(columnOptions.type);
   }
   return DeleteDateColumn(columnOptions);
+}
+
+export function ManyToManyEx(arg1, arg2) {
+  if (isTestEnv()) {
+    //ignore it for test
+    return Generated('uuid');
+  }
+  return ManyToMany(arg1, arg2);
 }

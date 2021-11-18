@@ -1,6 +1,6 @@
 {
   "name": "nestjs-db-unit",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Useful utils to simplify integration tests for nestjs / typeorm / postgres projects",
   "files": [
     "dist/**/*"
