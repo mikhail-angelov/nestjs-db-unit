@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/users';
 import { Role } from './entities/roles';
+import { Place } from './entities/places';
 
 @Injectable()
 export class AppService {
@@ -11,7 +12,9 @@ export class AppService {
     private readonly roleRepository: Repository<Role>,
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-  ) {}
+    @InjectRepository(Place)
+    private readonly placeRepository: Repository<Place>,
+  ) { }
 
   getHello(): string {
     return 'Hello World!';
@@ -34,5 +37,9 @@ export class AppService {
 
   async removeUser(id: string) {
     return this.userRepository.delete(id);
+  }
+
+  async getPlaces() {
+    return this.placeRepository.find();
   }
 }

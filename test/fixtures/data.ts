@@ -1,4 +1,4 @@
-import {RoleCode} from '../src/entities/roles'
+import { RoleCode } from '../src/entities/roles'
 const data = {
   Role: [
     {
@@ -18,6 +18,10 @@ const data = {
       },
     },
   ],
+  Place: [{
+    id: 'test-place',
+    point: { type: 'Point', coordinates: [1, 2] }
+  }],
 };
 
 export default data;

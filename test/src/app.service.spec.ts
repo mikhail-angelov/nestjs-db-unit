@@ -5,6 +5,7 @@ import { DbUnit } from '../../dist';
 import { getRepository, Repository } from 'typeorm';
 import { User } from './entities/users';
 import { Role, RoleCode } from './entities/roles';
+import { Place } from './entities/places';
 import data from '../fixtures/data';
 
 describe('AppService', () => {
@@ -12,11 +13,13 @@ describe('AppService', () => {
   let db = new DbUnit();
   let userRepo: Repository<User>;
   let roleRepo: Repository<Role>;
+  let placeRepo: Repository<Place>;
 
   beforeEach(async () => {
-    const conn = await db.initDb({ entities: [User, Role] });
+    const conn = await db.initDb({ entities: [User, Role, Place] });
     userRepo = getRepository(User);
     roleRepo = getRepository(Role);
+    placeRepo = getRepository(Place);
     const app: TestingModule = await Test.createTestingModule({
       controllers: [],
       providers: [
@@ -27,6 +30,10 @@ describe('AppService', () => {
         {
           provide: getRepositoryToken(Role, conn),
           useValue: roleRepo,
+        },
+        {
+          provide: getRepositoryToken(Place, conn),
+          useValue: placeRepo,
         },
         AppService,
       ],
@@ -72,5 +79,11 @@ describe('AppService', () => {
     await service.removeUser(ID);
     users = await userRepo.find();
     expect(users.length).toEqual(0);
+  });
+
+  it('should get places"', async () => {
+    let places = await service.getPlaces();
+    expect(places.length).toEqual(1);
+    expect(places[0].point.type).toEqual('Point');
   });
 });

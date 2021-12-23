@@ -6,17 +6,20 @@ import { DbUnit } from '../../dist';
 import { getRepository, Repository } from 'typeorm';
 import { User } from './entities/users';
 import { Role } from './entities/roles';
+import { Place } from './entities/places';
 
 describe('AppController', () => {
   let appController: AppController;
   let db = new DbUnit();
   let userRepo: Repository<User>;
   let roleRepo: Repository<Role>;
+  let placeRepo: Repository<Place>;
 
   beforeAll(async () => {
-    const conn = await db.initDb({ entities: [User, Role] });
+    const conn = await db.initDb({ entities: [User, Role, Place] });
     userRepo = getRepository(User);
     roleRepo = getRepository(Role);
+    placeRepo = getRepository(Place);
     const app: TestingModule = await Test.createTestingModule({
       controllers: [AppController],
       providers: [
@@ -27,6 +30,10 @@ describe('AppController', () => {
         {
           provide: getRepositoryToken(Role, conn),
           useValue: roleRepo,
+        },
+        {
+          provide: getRepositoryToken(Place, conn),
+          useValue: placeRepo,
         },
         AppService,
       ],

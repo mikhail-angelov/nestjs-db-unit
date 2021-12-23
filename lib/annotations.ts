@@ -29,6 +29,12 @@ export function ColumnEx(columnOptions: ColumnOptions) {
   if (columnOptions.type) {
     columnOptions.type = setAppropriateColumnType(columnOptions.type);
   }
+  if (columnOptions.type === 'geography') {
+    return Column({
+      type: 'text',
+      transformer: { from: (value: string) => JSON.parse(value), to: (value: any) => JSON.stringify(value) },
+    });
+  }
   return Column(columnOptions);
 }
 
