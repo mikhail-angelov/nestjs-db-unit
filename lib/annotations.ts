@@ -29,7 +29,7 @@ export function ColumnEx(columnOptions: ColumnOptions) {
   if (columnOptions.type) {
     columnOptions.type = setAppropriateColumnType(columnOptions.type);
   }
-  if (columnOptions.type === 'geography') {
+  if (columnOptions.type === 'geography' && isTestEnv()) {
     return Column({
       type: 'text',
       transformer: { from: (value: string) => JSON.parse(value), to: (value: any) => JSON.stringify(value) },
