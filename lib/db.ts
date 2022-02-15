@@ -45,11 +45,11 @@ export class DbUnit {
   async load(data: any) {
     const conn = await getConnection();
     for (let table of Object.keys(data)) {
-      if(!data[table] || !(data[table].length > 0)){
-        continue
+      if (!data[table] || !(data[table].length > 0)) {
+        continue;
       }
       //I have to deep copy db data, because rep.insert modify input data in place
-      const copiedData = data[table].map(item=>Object.assign({},item))
+      const copiedData = data[table].map((item) => Object.assign({}, item));
       const rep = conn.getRepository(table);
       await rep.insert(copiedData);
       this.log && console.log('DB loaded: ', table, data[table].length);
