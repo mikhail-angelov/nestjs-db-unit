@@ -14,6 +14,7 @@ const postgresSqliteTypeMapping: { [key: string]: ColumnType } = {
   timestamp: 'datetime',
   json: 'simple-json',
   enum: 'text',
+  bytea: 'text',
 };
 
 const isTestEnv = () => process.env.NODE_ENV === 'test';
