@@ -1,12 +1,16 @@
+
+import { expect } from 'chai'
 import { DbUnit } from '../../dist';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { AppService } from './app.service';
+
 import { getRepository, Repository } from 'typeorm';
 import { User } from './entities/users';
 import { Role } from './entities/roles';
 import { Place } from './entities/places';
+
 
 describe('AppController', () => {
 
@@ -46,6 +50,6 @@ describe('AppController', () => {
   afterEach(() => db.closeDb());
 
   it('should return "Hello World!"', () => {
-    expect(appController.getHello()).toBe('Hello World!');
+    expect(appController.getHello()).equal('Hello World!');
   });
 });

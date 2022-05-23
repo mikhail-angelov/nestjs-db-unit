@@ -1,7 +1,7 @@
+import { DbUnit } from '../../dist';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { AppService } from './app.service';
-import { DbUnit } from '../../dist';
 import { getRepository, Repository } from 'typeorm';
 import { User } from './entities/users';
 import { Role, RoleCode } from './entities/roles';

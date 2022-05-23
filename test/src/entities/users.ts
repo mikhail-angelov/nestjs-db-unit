@@ -1,17 +1,16 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Column, Entity, Index, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Generated, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { Role } from './roles';
-import { CreateDateColumnEx, UpdateDateColumnEx, ColumnEx, GeneratedEx } from '../../../dist';
 
 @Entity({ name: 'users' })
 export class User {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @Index('email')
+  // @Index('email')
   @Column({ unique: true })
   email!: string;
 
-  @GeneratedEx('increment')
+  @Generated('increment')
   @Column()
   count!: number;
 
@@ -22,12 +21,12 @@ export class User {
   @JoinColumn({ name: 'role_id' })
   role: Role;
 
-  @ColumnEx({ type: 'json', nullable: true })
+  @Column({ type: 'json', nullable: true })
   meta!: object;
 
-  @CreateDateColumnEx({ name: 'created_at', type: 'timestamptz' })
+  @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt!: Date;
 
-  @UpdateDateColumnEx({ name: 'updated_at', type: 'timestamptz' })
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
   updatedAt!: Date;
 }

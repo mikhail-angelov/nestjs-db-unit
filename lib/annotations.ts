@@ -9,6 +9,43 @@ import {
   ManyToMany,
 } from 'typeorm';
 
+if (typeof jest !== 'undefined') {
+  jest.mock('typeorm', () => {
+    const typeorm = jest.requireActual('typeorm');
+    return {
+      ...typeorm,
+      Generated: GeneratedEx,
+      Column: ColumnEx,
+      CreateDateColumn: CreateDateColumnEx,
+      UpdateDateColumn: UpdateDateColumnEx,
+      DeleteDateColumn: DeleteDateColumnEx,
+      ManyToMany: ManyToManyEx,
+    };
+  });
+} else {
+  const Module = require('module');
+  const originalLoad = Module._load;
+  let typeorm;
+  const fakeLoad = function (request, parent, isMain) {
+    if (request == 'typeorm') {
+      if (!typeorm) {
+        typeorm = originalLoad(request, parent, isMain);
+      }
+      return {
+        ...typeorm,
+        Generated: GeneratedEx,
+        Column: ColumnEx,
+        CreateDateColumn: () => CreateDateColumnEx,
+        UpdateDateColumn: () => UpdateDateColumnEx,
+        DeleteDateColumn: () => DeleteDateColumnEx,
+        ManyToMany: () => ManyToManyEx,
+      };
+    }
+    return originalLoad(request, parent, isMain);
+  };
+  Module._load = fakeLoad;
+}
+
 const postgresSqliteTypeMapping: { [key: string]: ColumnType } = {
   timestamptz: 'datetime',
   timestamp: 'datetime',
@@ -27,10 +64,10 @@ function setAppropriateColumnType(mySqlType: ColumnType): ColumnType {
 }
 
 export function ColumnEx(columnOptions: ColumnOptions) {
-  if (columnOptions.type) {
+  if (columnOptions?.type) {
     columnOptions.type = setAppropriateColumnType(columnOptions.type);
   }
-  if (columnOptions.type === 'geography' && isTestEnv()) {
+  if (columnOptions?.type === 'geography' && isTestEnv()) {
     return Column({
       type: 'text',
       transformer: { from: (value: string) => JSON.parse(value), to: (value: any) => JSON.stringify(value) },

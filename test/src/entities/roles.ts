@@ -1,6 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany,CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { User } from './users';
-import { CreateDateColumnEx, UpdateDateColumnEx, ColumnEx } from '../../../dist';
 
 export enum RoleCode {
   user = 'user',
@@ -15,7 +14,7 @@ export class Role {
   @Column({ name: 'name', nullable: false })
   name: string;
 
-  @ColumnEx({ type: 'enum', enum: RoleCode, unique: true })
+  @Column({ type: 'enum', enum: RoleCode, unique: true })
   code: string;
 
   @OneToMany(() => User, (user) => user.roleId, {
@@ -23,9 +22,9 @@ export class Role {
   })
   users?: User[];
 
-  @CreateDateColumnEx({ name: 'created_at', type: 'timestamptz' })
+  @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt!: Date;
 
-  @UpdateDateColumnEx({ name: 'updated_at', type: 'timestamptz' })
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
   updatedAt!: Date;
 }
