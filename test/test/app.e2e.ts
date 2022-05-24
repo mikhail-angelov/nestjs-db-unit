@@ -1,9 +1,9 @@
+import { DbUnit } from '../../dist';
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { Repository, getRepository } from 'typeorm';
 import { AppModule } from '../src/app.module';
-import { DbUnit } from '../../dist';
 import { User } from '../src/entities/users';
 import { Role, RoleCode } from '../src/entities/roles';
 
