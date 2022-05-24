@@ -8,12 +8,28 @@ it replace postgres DB connection with sqlite in memory DB for test environment
 
 ## Usage
 
-Since `sqlite` and `postgres` have different sets of data type and `typeorm` does not support easy way to redefine those types for test environment, so this lib contains wrappers for `@Column`, `@CreateDateColumn`, `@UpdateDateColumn` annotations.
-If your entity contains incompatible with `sqlite` fields, then you should use those wrappers:
+Starting `v3.0.0` the main usage for this library is changed, we do not need custom annotations any more and no need include into prod code.
+Since `sqlite` and `postgres` have different sets of data type and `typeorm` does not support easy way to redefine those types for test environment, so this lib patch `typeorm` annotations, wrappers for `@Column`, `@CreateDateColumn`, `@UpdateDateColumn` etc... annotations.
+There are some restriction:
+- you have to use `commonjs` modules for successful library patch: in `tsconfig.json`
+```
+...
+{
+    "compilerOptions": {
+        "module": "commonjs",
+     }
+}
+...
+```
+- import `nestjs-db-unit` at very top of your tests (you have to patch `typeorm` first)
+```
+import { DbUnit } from 'nestjs-db-unit';
+...
+```
 
+### Example
 ```ts
 import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
-import {CreateDateColumnEx, UpdateDateColumnEx, ColumnEx} from 'nestjs-db-unit'
 
 @Entity({ name: 'users' })
 export class User {
@@ -24,13 +40,13 @@ export class User {
   @Column({ unique: true})
   email!: string;
 
-  @ColumnEx({type: 'json', nullable: true})
+  @Column({type: 'json', nullable: true})
   meta!: object;
 
-  @CreateDateColumnEx({ name: 'created_at', type: 'timestamptz' })
+  @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt!: Date;
 
-  @UpdateDateColumnEx({ name: 'updated_at', type: 'timestamptz' })
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
   updatedAt!: Date;
 }
 ```
@@ -59,10 +75,10 @@ export class AppService {
 This is example of test:
 
 ```ts
+import { DbUnit } from 'nestjs-db-unit'; //on top
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { getRepository, Repository } from 'typeorm';
-import { DbUnit } from 'nestjs-db-unit';
 import { AppService } from './app.service';
 import { User } from './entities/users';
 
@@ -113,14 +129,6 @@ npm i nestjs-db-unit
 ```
 
 ## API
-
-### annotations
-```ts
-import {CreateDateColumnEx, UpdateDateColumnEx, ColumnEx} from 'nestjs-db-unit'
-```
-they wrap `CreateDateColumn`, `UpdateDateColumn`, `Column` respectively
-you should use `ColumnEx` instead of `Column` if it has types: `timestamptz`, `timestamp`, `json`, `enum`
-> the list could be extended in future
 
 ### DbUnit - utility class
 ```ts
