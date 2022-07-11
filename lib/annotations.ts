@@ -35,10 +35,10 @@ if (typeof jest !== 'undefined') {
         ...typeorm,
         Generated: GeneratedEx,
         Column: ColumnEx,
-        CreateDateColumn: () => CreateDateColumnEx,
-        UpdateDateColumn: () => UpdateDateColumnEx,
-        DeleteDateColumn: () => DeleteDateColumnEx,
-        ManyToMany: () => ManyToManyEx,
+        CreateDateColumn: CreateDateColumnEx,
+        UpdateDateColumn: UpdateDateColumnEx,
+        DeleteDateColumn: DeleteDateColumnEx,
+        ManyToMany: ManyToManyEx,
       };
     }
     return originalLoad(request, parent, isMain);
