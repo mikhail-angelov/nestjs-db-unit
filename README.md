@@ -1,5 +1,9 @@
 # nestjs-db-unit
 
+> **Archived.** This library targets NestJS 8 and TypeORM 0.2 and is no longer maintained.
+> For integration tests against a real database, use [Testcontainers](https://node.testcontainers.org/modules/postgresql/)
+> or an in-process Postgres such as [PGlite](https://github.com/electric-sql/pglite).
+
 ![Test](https://github.com/mikhail-angelov/nestjs-db-unit/workflows/Test/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/mikhail-angelov/nestjs-db-unit/badge.svg?branch=master)](https://coveralls.io/github/mikhail-angelov/nestjs-db-unit?branch=master)
 
